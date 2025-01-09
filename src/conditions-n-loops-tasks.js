@@ -415,8 +415,50 @@ function shuffleChar(str, iterations) {
  * @param {number} number The source number
  * @returns {number} The nearest larger number, or original number if none exists.
  */
-function getNearestBigger(/* number */) {
-  throw new Error('Not implemented');
+function getNearestBigger(number) {
+  const digitsArr = [];
+  let result = 0;
+  let currentNumber = number;
+  while (currentNumber > 0) {
+    digitsArr.push(currentNumber % 10);
+    currentNumber = Math.floor(currentNumber / 10);
+  }
+  const arrlength = digitsArr.length;
+  for (let i = 0; i < arrlength / 2; i += 1) {
+    const temp = digitsArr[i];
+    digitsArr[i] = digitsArr[arrlength - 1 - i];
+    digitsArr[arrlength - 1 - i] = temp;
+  }
+  for (let i = arrlength - 1; i > 0; i -= 1) {
+    if (digitsArr[i - 1] < digitsArr[i]) {
+      let minIndex = i;
+      for (let j = i; j < arrlength; j += 1) {
+        if (
+          digitsArr[j] > digitsArr[i - 1] &&
+          digitsArr[j] < digitsArr[minIndex]
+        ) {
+          minIndex = j;
+        }
+      }
+      let temp = digitsArr[i - 1];
+      digitsArr[i - 1] = digitsArr[minIndex];
+      digitsArr[minIndex] = temp;
+      for (let k = i; k < arrlength - 1; k += 1) {
+        for (let l = k + 1; l < arrlength; l += 1) {
+          if (digitsArr[k] > digitsArr[l]) {
+            temp = digitsArr[k];
+            digitsArr[k] = digitsArr[l];
+            digitsArr[l] = temp;
+          }
+        }
+      }
+      break;
+    }
+  }
+  for (let i = 0; i < arrlength; i += 1) {
+    result = result * 10 + digitsArr[i];
+  }
+  return result === number ? number : result;
 }
 
 module.exports = {
