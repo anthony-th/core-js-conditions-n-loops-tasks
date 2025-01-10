@@ -454,7 +454,7 @@ function sortByAsc(arr) {
  */
 function shuffleChar(str, iterations) {
   const n = str.length;
-  function subShuffle(result) {
+  const subShuffle = (result) => {
     let oddPositions = '';
     let evenPositions = '';
     for (let index = 0; index < n; index += 1) {
@@ -465,7 +465,7 @@ function shuffleChar(str, iterations) {
       }
     }
     return evenPositions + oddPositions;
-  }
+  };
   let period = 0;
   let result = str;
   do {
